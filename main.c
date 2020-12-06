@@ -11,29 +11,37 @@ struct Book{
 
 
 int main(int argc, char *argv[]) {
-	struct Book *p;
+	struct Book **bookshelf;
+	int i;
+	bookshelf = (struct Book**)malloc(3*sizeof(struct Book*)); //3 pointer allocations
+	for (i=0; i<3; i++)
+	   bookshelf[i] = (struct Book*)malloc(10*sizeof(struct Book)); //10 allocations 
+	   /*
+	   if (p==NULL) {
+	   printf("memory allocation error!\n");
+	   return -1;
+       }
+       */
+    
+	bookshelf[1][3].number = 5;
+	strcpy(bookshelf[1][3].title, "C programming");
 	
-	p = (struct Book*)malloc(2*sizeof(struct Book)); //dynamic allocation of 2 book
+	(bookshelf[2]+4)->number = 3;
+	strcpy((bookshelf[2]+4)->title, "Communication Theory");
 	
-	if (p == NULL) {
-		printf("memory allacation error!\n");
-		return -1;
+	printf("book (1,3) : %i, %s\n", (bookshelf[1]+3)->number, (bookshelf[1]+3)->title);
+	printf("book (2,4) : %i, %s\n", bookshelf[2][4].number, bookshelf[2][4].title);
+	
+	// free allocation
+	
+    for (i=0; i<3; i++)
+        free(bookshelf[i]);
+      free(bookshelf);
+	  
+	  return 0;  
+
 		
 	} 
-	
-	p->number = 1;
-	strcpy(p->title, "C Programming");
-	
-	(p+1)->number = 2;
-	strcpy((p+1)->title, "Electronics");
-	
-	printf("%s %s \n", p->title, (p+1)->title);
-	free(p);
-	return 0;
-	
-}
-
-
 	
 
 
